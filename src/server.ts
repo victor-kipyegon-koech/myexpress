@@ -3,6 +3,8 @@ import express, {Application}from "express";
 import dotenv from "dotenv"
 import { logger } from "./middleware/logger";
 import { usersRoute } from "./users/users.route";
+import client from "./db/db";
+import { error } from "console";
 
 
 dotenv.config();
@@ -22,6 +24,16 @@ app.get('/',(req,res)=>{
 })
 //import route
 app.use("/api",usersRoute)
-app.listen(PORT,() =>{
+
+//connect to the database,then start the server
+client.connect().then(()=>{
+    console.log("connected to the postgres database")
+    app.listen(PORT,() =>{
     console.log(`🚀 Server is running on http://localhost:${PORT}`)
 })
+}).catch((error)=>{
+    console.log("failed to connect to the DB ",error)
+    process.exit(1)
+})
+
+
