@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { getUserService } from "./user.service";
+import { createUserService, getUserService } from "./user.service";
 import { error } from "console";
+import { escape } from "querystring";
 
 export const getUser= async(req:Request,res:Response)=>{
   try {
@@ -12,24 +13,35 @@ export const getUser= async(req:Request,res:Response)=>{
 
     }
   } catch (error:any){
-    res.status(500).json({error:error.message})
+    res.status(500).json({error:error.message || "failed to fetch the users"})
   }
 }
 
-export const createUser=(req:Request,res:Response)=>{
-    const newUser =req.body;
-
-    res.status(201).send(`user created with :${newUser.fullName}`)
+export const createUser= async(req:Request,res:Response)=>{
+  const {fullName,email} = req.body;
+  if(!fullName || !email ){
+    res.send(400).json({error:"ALL fields are required!"});
+    return;
+  }try {
+    const newUser = await createUserService({fullName,email})
+    if ( newUser=== null){
+      res.status(500).json({message:"Failed ro create user"}) 
+    }else{
+      res.status(200).json(newUser)
+    }
+  } catch (error:any) {
+    res.status(500).json({error:error.message || "Failed to create user"})
+  }
 }
 
-export const updateUser=(req:Request,res:Response)=>{
+export const updateUser= async(req:Request,res:Response)=>{
     const userId =req.params
     const updateUser =req.body;
 
     res.status(201).send(`user updated with :${updateUser.fullName}`)
 }
 
-export const deleteUser=(req:Request,res:Response)=>{
+export const deleteUser= async(req:Request,res:Response)=>{
     const userId =req.params.id
      
 

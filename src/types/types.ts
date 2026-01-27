@@ -1,5 +1,9 @@
 export interface user {
  userid:number,
- FullName:string,
- Email:string
+ fullName:string,
+ email:string
+}
+export interface userCreateRequest{
+    fullName:string,
+    email:string
 }

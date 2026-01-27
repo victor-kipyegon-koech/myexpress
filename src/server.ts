@@ -1,5 +1,5 @@
 
-import express, {Application}from "express";
+import express, {Application} from "express";
 import dotenv from "dotenv"
 import { logger } from "./middleware/logger";
 import { usersRoute } from "./users/users.route";
@@ -22,7 +22,7 @@ const PORT =process.env.PORT || 5000
 app.get('/',(req,res)=>{
     res.send('Welcome to Express + Typescript');
 })
-//import route
+//import route     
 app.use("/api",usersRoute)
 
 //connect to the database,then start the server

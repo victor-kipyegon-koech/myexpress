@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import { createUser, deleteUser, getUser, updateUser } from "./user.controller";
 
 export const usersRoute = Router();
@@ -14,3 +14,4 @@ usersRoute.put('/user/:id',updateUser)
 //delete
 usersRoute.delete('/user/:id',deleteUser)
 
+ 
