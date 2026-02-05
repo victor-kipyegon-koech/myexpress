@@ -16,12 +16,12 @@ Content-Type: application/json
 }
 
 ###
-PUT  http://localhost:5000/api/user/4
+PUT  http://localhost:5000/api/user
 Content-Type: application/json
 
 {
     "fullName":"Amos updated",
-    "Email":"victorkipyegon778@gmail.com"
+    "email":"victorkipyegon778@gmail.com"
 }
 
 ###
